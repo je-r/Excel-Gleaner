@@ -1,3 +1,17 @@
+
+var a = null;
+
+function downloadFile(data, fileName) {
+    a = document.createElement('a');
+    document.body.appendChild(a);
+    a.download = filename;
+    var encodedData = btoa(unescape(encodeURIComponent(data)));
+    a.href = "data:application/octet-stream;charset=utf-8;base64,"+encodedData;
+    a.click();   
+
+   //data:application/octet-stream;charset=utf-8;base64,Zm9vIGJ
+}
+
 //
 function readBlob() {
     var files = document.getElementById('files').files;
@@ -97,11 +111,12 @@ function exportFirstSheet()
           {
             // export
             var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-            debugValue = XL_row_object;
-            //var json_object = JSON.stringify(XL_row_object);
+            //debugValue = XL_row_object;
+            var json_object = JSON.stringify(XL_row_object);
             document.getElementById('msg').textContent = "Excel file parsed. Found "+XL_row_object.length + 
                 " rows in the first sheet.";
             // TODO: downlaod
+            downloadFile(json_object, sheetName+".json.txt");
           }
           sheetNumber += 1;
           // Here is your object
@@ -130,6 +145,7 @@ document.querySelector('.excel2').addEventListener('click', function(evt) {
         exportFirstSheet();
     }
 }, false);
+
 
 var version_excel_gleaner_js = 3;
 
