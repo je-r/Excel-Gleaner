@@ -2,7 +2,7 @@
 function readBlob() {
     var files = document.getElementById('files').files;
     if (!files.length) {
-        alert('Please select a file!');
+        document.getElementById('msg').textContent = 'Please select a file!';
         return;
     }
 
@@ -19,6 +19,7 @@ function readBlob() {
         document.getElementById('byte_range').textContent = 
             ['Read bytes: ', start + 1, ' - ', stop + 1,
                 ' of ', file.size, ' byte file'].join('');
+                document.getElementById('msg').textContent = "... reading done."
         }
     };
     var blob = file.slice(start, stop + 1);
@@ -35,7 +36,7 @@ function showSheets()
 {
     var files = document.getElementById('files').files;
     if (!files.length) {
-        alert('Please select a file!');
+        document.getElementById('msg').textContent = 'Please select a file!';
         return;
     }
     var file = files[0]; 
@@ -45,19 +46,22 @@ function showSheets()
         var workbook = XLSX.read(data, {
           type: 'binary'
         });
-  
+        var sheets = "";
         workbook.SheetNames.forEach(function(sheetName) {
           // Here is your object
           //var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
           //var json_object = JSON.stringify(XL_row_object);
           //console.log(json_object);
-          console.log("sheetName='"+sheetName+"'");
+          //console.log("sheetName='"+sheetName+"'");
+          sheets += ""+sheetName+", ";
         })
+        document.getElementById('msg').textContent = "found sheets: " + sheets;
   
       }; // reader.onload
   
       reader.onerror = function(ex) {
-        console.log(ex);
+        document.getElementById('msg').textContent = ""+ex+"";
+        //console.log(ex);
       };
   
       reader.readAsBinaryString(file);
