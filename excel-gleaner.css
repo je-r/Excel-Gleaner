@@ -6,3 +6,15 @@
     overflow-x: hidden;
   }
   #byte_range { margin-top: 5px; }
+
+  .theHeader {
+    padding: 30px;
+  }
+  
+  .theTitle {
+    font-size: large;
+  }
+
+  .theBody {
+    padding: 30px;
+  }

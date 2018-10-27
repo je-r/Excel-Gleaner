@@ -10,22 +10,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script> 
 </head>
 <body>
-  <div>
-Excel Cleaner, version 1.</div>
-<input type="file" id="files" name="file" /> 
-<br>
+  <div class="theHeader">
+<span class="theTitle">Excel Cleaner, version 1.</span><br>
+(everything done client-side with JavaScript in browser, no uploads to servers)</div>
+<div clas="theBody">
+  <input type="file" id="files" name="file" /> 
+<br><br><br>
 <span class="readBytesButtons">
-  <button>read file</button>
-</span><br>
+  <button>read file, find length</button>
+</span> 
 <span class="excel">
   <button>show sheet names</button>
-</span><br>
+</span> 
 <span class="excel2">
-  <button>export first sheet</button>
+  <button>export first sheet to JSON</button>
 </span>
 <div id="byte_range"></div>
 <div id="msg"></div>
 <div id="byte_content"></div>
+
+</div>
 
 
 <script src="excel-gleaner.js"></script>

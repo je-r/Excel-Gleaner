@@ -4,7 +4,7 @@ var a = null;
 function downloadFile(data, fileName) {
     a = document.createElement('a');
     document.body.appendChild(a);
-    a.download = filename;
+    a.download = fileName;
     var encodedData = btoa(unescape(encodeURIComponent(data)));
     a.href = "data:application/octet-stream;charset=utf-8;base64,"+encodedData;
     a.click();   
@@ -111,23 +111,16 @@ function exportFirstSheet()
           {
             // export
             var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-            //debugValue = XL_row_object;
-            var json_object = JSON.stringify(XL_row_object);
+           // debugValue = XL_row_object;   
+            var json_object = JSON.stringify(XL_row_object, null, 2);
+            //debugValue = json_object;
             document.getElementById('msg').textContent = "Excel file parsed. Found "+XL_row_object.length + 
                 " rows in the first sheet.";
-            // TODO: downlaod
-            downloadFile(json_object, sheetName+".json.txt");
+            downloadFile(json_object.replace(new RegExp("\n", 'g'),"\r\n"), sheetName+".json.txt");
           }
           sheetNumber += 1;
-          // Here is your object
-          //var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-          //var json_object = JSON.stringify(XL_row_object);
-          //console.log(json_object);
-          //console.log("sheetName='"+sheetName+"'");
-          //sheets += ""+sheetName+", ";
         })
-        //document.getElementById('msg').textContent = "found sheets: " + sheets;
-  
+
       }; // reader.onload
   
       reader.onerror = function(ex) {
