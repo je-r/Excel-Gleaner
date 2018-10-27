@@ -74,5 +74,62 @@ document.querySelector('.excel').addEventListener('click', function(evt) {
     }
 }, false);
 
+
+var debugValue = null;
+function exportFirstSheet()
+{
+    var files = document.getElementById('files').files;
+    if (!files.length) {
+        document.getElementById('msg').textContent = 'Please select a file!';
+        return;
+    }
+    var file = files[0]; 
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var data = e.target.result; // not working in chrome: result();
+        var workbook = XLSX.read(data, {
+          type: 'binary'
+        });
+        var sheets = "";
+        var sheetNumber = 1;
+        workbook.SheetNames.forEach(function(sheetName) {
+          if (sheetNumber == 1)
+          {
+            // export
+            var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+            debugValue = XL_row_object;
+            //var json_object = JSON.stringify(XL_row_object);
+            document.getElementById('msg').textContent = "Excel file parsed. Found "+XL_row_object.length + 
+                " rows in the first sheet.";
+            // TODO: downlaod
+          }
+          sheetNumber += 1;
+          // Here is your object
+          //var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+          //var json_object = JSON.stringify(XL_row_object);
+          //console.log(json_object);
+          //console.log("sheetName='"+sheetName+"'");
+          //sheets += ""+sheetName+", ";
+        })
+        //document.getElementById('msg').textContent = "found sheets: " + sheets;
+  
+      }; // reader.onload
+  
+      reader.onerror = function(ex) {
+        document.getElementById('msg').textContent = ""+ex+"";
+        //console.log(ex);
+      };
+  
+      reader.readAsBinaryString(file);
+} // exportFirstSheet()
+
+
+
+document.querySelector('.excel2').addEventListener('click', function(evt) {
+    if (evt.target.tagName.toLowerCase() == 'button') {
+        exportFirstSheet();
+    }
+}, false);
+
 var version_excel_gleaner_js = 3;
 
