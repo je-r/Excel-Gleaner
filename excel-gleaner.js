@@ -116,7 +116,9 @@ function exportFirstSheet()
             //debugValue = json_object;
             document.getElementById('msg').textContent = "Excel file parsed. Found "+XL_row_object.length + 
                 " rows in the first sheet.";
-            downloadFile(json_object.replace(new RegExp("\n", 'g'),"\r\n"), sheetName+".json.txt");
+            var javascriptSource = "var "+sheetName+" = \r\n"+
+               json_object.replace(new RegExp("\n", 'g'),"\r\n") + "; \r\n";
+            downloadFile(javascriptSource, sheetName+".json.txt");
           }
           sheetNumber += 1;
         })
